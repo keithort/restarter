@@ -16,8 +16,8 @@ server.use(bodyParser.urlencoded({ extended: true }))
 if (__PROD__) {
   config = require('../tools/webpack.prod')
   server.use(helmet())
-  server.use(compression());
-  server.use(config.output.publicPath, express.static(config.output.path));
+  server.use(compression())
+  server.use(config.output.publicPath, express.static(config.output.path))
 } else {
   config = require('../tools/webpack.dev')
   const webpack = require('webpack')
@@ -30,7 +30,7 @@ if (__PROD__) {
     silent: true,
     stats: {
       colors: true,
-      progress: true,
+      progress: true
     }
   })
   server.use(morgan('dev'))
@@ -55,7 +55,7 @@ server.get('*', (req, res) => {
     </html>
   `)
 })
-console.log(__PROD__)
+
 server.listen(5000, '0.0.0.0', () => {
   console.log('Listening on port 5000')
 })

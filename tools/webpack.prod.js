@@ -1,5 +1,5 @@
-var path = require('path');
-var webpack = require('webpack');
+var path = require('path')
+var webpack = require('webpack')
 
 module.exports = {
   devtool: false,
@@ -21,13 +21,13 @@ module.exports = {
         unused: true,
         dead_code: true,
         warnings: false,
-        screw_ie8: true,
+        screw_ie8: true
       }
     }),
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production'),
-      '__DEV__': false,
+      '__DEV__': false
     })
   ],
   module: {
@@ -37,4 +37,4 @@ module.exports = {
       include: path.join(__dirname, '../client')
     }]
   }
-};
+}

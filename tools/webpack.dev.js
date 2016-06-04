@@ -1,12 +1,8 @@
-const path = require('path');
-const webpack = require('webpack');
+const path = require('path')
+const webpack = require('webpack')
 const CONFIG = require('./webpack.base')
 
-const {
-  CLIENT_ENTRY,
-  CLIENT_OUTPUT,
-  PUBLIC_PATH
-} = CONFIG
+const {CLIENT_ENTRY, CLIENT_OUTPUT, PUBLIC_PATH} = CONFIG
 
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
@@ -26,8 +22,8 @@ module.exports = {
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('development'),
-      '__DEV__': true,
-    }),
+      '__DEV__': true
+    })
   ],
   module: {
     loaders: [{
@@ -36,4 +32,4 @@ module.exports = {
       include: CLIENT_ENTRY
     }]
   }
-};
+}
