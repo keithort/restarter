@@ -1,16 +1,20 @@
 import React from 'react'
 
-var CommentForm = React.createClass({
-  getInitialState: function () {
-    return {author: '', text: ''}
-  },
-  handleAuthorChange: function (e) {
+export default class CommentForm extends React.Component {
+  constructor(){
+    super()
+    this.state = {
+      author: '',
+      text: ''
+    }
+  }
+  handleAuthorChange = (e) => {
     this.setState({author: e.target.value})
-  },
-  handleTextChange: function (e) {
+  }
+  handleTextChange = (e) => {
     this.setState({text: e.target.value})
-  },
-  render: function () {
+  }
+  render() {
     return (
     <form className="commentForm">
       <input
@@ -27,4 +31,4 @@ var CommentForm = React.createClass({
     </form>
     )
   }
-})
+}

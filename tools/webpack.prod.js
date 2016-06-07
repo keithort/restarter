@@ -1,16 +1,19 @@
-var path = require('path')
-var webpack = require('webpack')
+const path = require('path')
+const webpack = require('webpack')
+const CONFIG = require('./webpack.base')
+const AssetsPlugin = require('assets-webpack-plugin')
+const { CLIENT_ENTRY, CLIENT_OUTPUT, PUBLIC_PATH } = CONFIG
 
 module.exports = {
   devtool: false,
   entry: [
-    path.join(process.cwd(), 'client/index.js')
+    CLIENT_ENTRY
   ],
   output: {
-    filename: '[name].js',
-    chunkFilename: '[id].chunk_[hash].js',
-    publicPath: '/',
-    path: path.resolve(process.cwd(), 'public/js')
+    filename: '[name]-[hash].js',
+    chunkFilename: '[name]-[hash].chunk.js',
+    publicPath: PUBLIC_PATH,
+    path: CLIENT_OUTPUT
   },
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(),
@@ -28,13 +31,32 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production'),
       '__DEV__': false
-    })
+    }),
+    new AssetsPlugin({ filename: 'assets.json' }),
   ],
   module: {
-    loaders: [{
-      test: /\.js$/,
-      loader: 'babel',
-      include: path.join(__dirname, '../client')
-    }]
+    loaders: [
+      {
+        test: /\.js$/,
+        loader: 'babel',
+        include: CLIENT_ENTRY
+      },
+      {
+        test: /\.json$/,
+        loader: 'json'
+      },
+      {
+        test: /\.(gif|jpe?g|png|ico)$/,
+        loader: 'url',
+        query: { limit: 10000, name: '[name].[hash:8].[ext]' },
+        include: CLIENT_ENTRY
+      },
+      {
+        test: /\.(otf|eot|svg|ttf|woff|woff2).*$/,
+        loader: 'url',
+        query: { limit: 10000, name: '[name].[hash:8].[ext]' },
+        include: CLIENT_ENTRY
+      }
+    ]
   }
 }

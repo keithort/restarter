@@ -4,6 +4,7 @@ const helmet = require('helmet')
 const compression = require('compression')
 const morgan = require('morgan')
 
+
 const __PROD__ = process.env.NODE_ENV === 'production'
 let config
 
@@ -15,6 +16,7 @@ server.use(bodyParser.urlencoded({ extended: true }))
 
 if (__PROD__) {
   config = require('../tools/webpack.prod')
+  const assets = require('../assets.json')
   server.use(helmet())
   server.use(compression())
   server.use(config.output.publicPath, express.static(config.output.path))
@@ -50,7 +52,7 @@ server.get('*', (req, res) => {
       </head>
       <body>
         <div id="root"></div>
-        <script src="main.js"></script>
+        <script src="${ __PROD__ ? assets.main.js : 'main.js' }"></script>
       </body>
     </html>
   `)
