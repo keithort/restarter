@@ -26,6 +26,14 @@ module.exports = {
     })
   ],
   module: {
+    preLoaders: [
+      {
+        // set up standard-loader as a preloader
+        test: /\.jsx?$/,
+        loader: 'standard',
+        exclude: /(node_modules|bower_components)/
+      }
+    ],
     loaders: [
       {
         test: /\.js$/,
@@ -49,5 +57,9 @@ module.exports = {
         include: CLIENT_ENTRY
       }
     ]
+  },
+  standard: {
+    // config options to be passed through to standard e.g.
+    parser: 'babel-eslint'
   }
 }

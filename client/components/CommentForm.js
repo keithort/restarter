@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default class CommentForm extends React.Component {
-  constructor(){
+  constructor () {
     super()
     this.state = {
       author: '',
@@ -14,21 +14,21 @@ export default class CommentForm extends React.Component {
   handleTextChange = (e) => {
     this.setState({text: e.target.value})
   }
-  render() {
+  render () {
     return (
-    <form className="commentForm">
-      <input
-        type="text"
-        placeholder="Your name"
-        value={this.state.author}
-        onChange={this.handleAuthorChange} />
-      <input
-        type="text"
-        placeholder="Say something..."
-        value={this.state.text}
-        onChange={this.handleTextChange} />
-      <input type="submit" value="Post" />
-    </form>
+      <form className='commentForm'>
+        <input
+          type='text'
+          placeholder='Your name'
+          value={this.state.author}
+          onChange={this.handleAuthorChange} />
+        <input
+          type='text'
+          placeholder='Say something...'
+          value={this.state.text}
+          onChange={this.handleTextChange} />
+        <input type='submit' value='Post' />
+      </form>
     )
   }
 }

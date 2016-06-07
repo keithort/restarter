@@ -12,12 +12,10 @@ export default class Button extends React.Component {
     this.setState({liked: 'blah'})
   }
   render () {
-    // const text = this.state.liked ? 'like' : 'haven\'t liked'
     return (
-    <button onClick={this.handleClick}>
-      {/*You {text} this. Click to toggle.*/}
-      {this.state.liked}
-    </button>
+      <button onClick={this.handleClick}>
+        {this.state.liked}
+      </button>
     )
   }
 }
