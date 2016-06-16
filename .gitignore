@@ -1,5 +1,5 @@
-build
+lib
 node_modules
+public/assets
 assets.json
-
 npm-debug.log

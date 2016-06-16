@@ -1,9 +1,9 @@
-const express = require('express')
-const bodyParser = require('body-parser')
-const helmet = require('helmet')
-const compression = require('compression')
-const morgan = require('morgan')
-
+import express from 'express'
+import bodyParser from 'body-parser'
+import helmet from 'helmet'
+import compression from 'compression'
+import morgan from 'morgan'
+import path from 'path'
 
 const __PROD__ = process.env.NODE_ENV === 'production'
 let config

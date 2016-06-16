@@ -2,15 +2,15 @@
   "name": "restarter",
   "version": "1.0.0",
   "description": "My react seed project",
-  "main": "index.js",
   "scripts": {
-    "start": "node ./server",
-    "build": "webpack --config ./tools/webpack.prod",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "babel-node ./server",
+    "build": "npm run build-client && npm run build-server",
+    "build-client": "webpack --config ./tools/webpack.prod",
+    "build-server": "rimraf lib && babel ./server -d lib --copy-files",
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "@jaredpalmer",
+  "license": "MIT",
   "dependencies": {
     "assets-webpack-plugin": "^3.4.0",
     "babel-cli": "6.9.0",
@@ -28,11 +28,8 @@
     "morgan": "^1.7.0",
     "react": "^15.0.2",
     "react-dom": "^15.0.2",
-    "react-helmet": "^3.1.0",
-    "react-redux": "^4.4.5",
     "react-router": "^2.4.1",
     "redux": "^3.5.2",
-    "redux-thunk": "^2.1.0",
     "rimraf": "^2.5.2",
     "url-loader": "0.5.7",
     "webpack": "1.13.1"
