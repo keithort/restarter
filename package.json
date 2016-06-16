@@ -6,7 +6,11 @@
     "start": "babel-node ./server",
     "build": "npm run build-client && npm run build-server",
     "build-client": "webpack --config ./tools/webpack.prod",
-    "build-server": "rimraf lib && babel ./server -d lib --copy-files"
+    "build-server": "rimraf lib && babel ./server -d lib --copy-files",
+    "test": "rimraf lib && NODE_ENV=test ./node_modules/mocha/bin/mocha --compilers js:babel-core/register --recursive",
+    "test:watch": "npm test -- --watch",
+    "coverage": "",
+    "lint": "standard"
   },
   "keywords": [],
   "author": "@jaredpalmer",
@@ -37,11 +41,21 @@
   },
   "devDependencies": {
     "babel-eslint": "^6.0.4",
+    "babel-register": "^6.9.0",
+    "expect": "^1.20.1",
+    "mocha": "^2.5.3",
     "nyc": "^6.4.4",
     "react-hot-loader": "^3.0.0-beta.1",
     "standard": "^7.1.2",
     "standard-loader": "^4.0.0",
     "webpack-dev-middleware": "^1.6.1",
     "webpack-hot-middleware": "^2.10.0"
+  },
+  "nyc": {
+    "require": [
+      "babel-register"
+    ],
+    "sourceMap": false,
+    "instrument": false
   }
 }
