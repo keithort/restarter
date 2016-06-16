@@ -9,7 +9,7 @@
     "build-server": "rimraf lib && babel ./server -d lib --copy-files",
     "test": "rimraf lib && NODE_ENV=test ./node_modules/mocha/bin/mocha --compilers js:babel-core/register --recursive",
     "test:watch": "npm test -- --watch",
-    "coverage": "",
+    "coverage": "nyc npm test",
     "lint": "standard"
   },
   "keywords": [],
