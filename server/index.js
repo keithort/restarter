@@ -1,9 +1,9 @@
-import express from 'express'
-import bodyParser from 'body-parser'
-import helmet from 'helmet'
-import compression from 'compression'
-import morgan from 'morgan'
-import path from 'path'
+const express = require('express')
+const bodyParser = require('body-parser')
+const helmet = require('helmet')
+const compression = require('compression')
+const morgan = require('morgan')
+
 
 const __PROD__ = process.env.NODE_ENV === 'production'
 let config
@@ -15,13 +15,13 @@ server.use(bodyParser.json())
 server.use(bodyParser.urlencoded({ extended: true }))
 
 if (__PROD__) {
-  config = require('../../tools/webpack.prod')
-  const assets = require('../../assets.json')
+  config = require('../tools/webpack.prod')
+  const assets = require('../assets.json')
   server.use(helmet())
   server.use(compression())
-
+  server.use(config.output.publicPath, express.static(config.output.path))
 } else {
-  config = require('../../tools/webpack.dev')
+  config = require('../tools/webpack.dev')
   const webpack = require('webpack')
   const webpackDevMiddleware = require('webpack-dev-middleware')
   const webpackHotMiddleware = require('webpack-hot-middleware')
@@ -40,8 +40,6 @@ if (__PROD__) {
   server.use(webpackHotMiddleware(compiler))
 }
 
-server.use(express.static(path.resolve(__dirname, '../../public')))
-
 server.get('*', (req, res) => {
   res.send(`
     <!DOCTYPE html>
@@ -51,11 +49,10 @@ server.get('*', (req, res) => {
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <title>Yolo</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" type="image/x-icon" href="favicon.ico">
       </head>
       <body>
         <div id="root"></div>
-        <script src="${ __PROD__ ? assets.main.js : 'assets/main.js' }"></script>
+        <script src="${ __PROD__ ? assets.main.js : 'main.js' }"></script>
       </body>
     </html>
   `)

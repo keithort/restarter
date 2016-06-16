@@ -4,10 +4,8 @@
   "description": "My react seed project",
   "main": "index.js",
   "scripts": {
-    "start": "babel-node ./modules/server",
-    "build": "npm run build-client && npm run build-server",
-    "build-client": "webpack --config ./tools/webpack.prod",
-    "build-server": "rimraf lib && babel ./modules/server -d lib/server --copy-files",
+    "start": "node ./server",
+    "build": "webpack --config ./tools/webpack.prod",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
