@@ -6,7 +6,7 @@ import morgan from 'morgan'
 import path from 'path'
 
 const __PROD__ = process.env.NODE_ENV === 'production'
-let config
+let config, assets
 
 const server = express()
 
@@ -16,7 +16,7 @@ server.use(bodyParser.urlencoded({ extended: true }))
 
 if (__PROD__) {
   config = require('../tools/webpack.prod')
-  const assets = require('../assets.json')
+  assets = require('../assets.json')
   server.use(helmet())
   server.use(compression())
 } else {
@@ -54,7 +54,7 @@ server.get('*', (req, res) => {
       </head>
       <body>
         <div id="root"></div>
-        <script src="${ __PROD__ ? assets.main.js : 'assets/main.js' }"></script>
+        <script src="${__PROD__ ? assets.main.js : 'assets/main.js'}"></script>
       </body>
     </html>
   `)
