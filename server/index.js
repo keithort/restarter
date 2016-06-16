@@ -19,7 +19,6 @@ if (__PROD__) {
   const assets = require('../assets.json')
   server.use(helmet())
   server.use(compression())
-  server.use(config.output.publicPath, express.static(config.output.path))
 } else {
   config = require('../tools/webpack.dev')
   const webpack = require('webpack')
@@ -40,6 +39,8 @@ if (__PROD__) {
   server.use(webpackHotMiddleware(compiler))
 }
 
+server.use(express.static(path.join(__dirname, '../public')))
+
 server.get('*', (req, res) => {
   res.send(`
     <!DOCTYPE html>
@@ -49,10 +50,11 @@ server.get('*', (req, res) => {
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <title>Yolo</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" type="image/x-icon" href="favicon.ico">
       </head>
       <body>
         <div id="root"></div>
-        <script src="${ __PROD__ ? assets.main.js : 'main.js' }"></script>
+        <script src="${ __PROD__ ? assets.main.js : 'assets/main.js' }"></script>
       </body>
     </html>
   `)
