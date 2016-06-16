@@ -6,7 +6,7 @@
     "start": "babel-node ./server",
     "build": "npm run build-client && npm run build-server",
     "build-client": "webpack --config ./tools/webpack.prod",
-    "build-server": "rimraf lib && babel ./server -d lib --copy-files",
+    "build-server": "rimraf lib && babel ./server -d lib --copy-files"
   },
   "keywords": [],
   "author": "@jaredpalmer",
