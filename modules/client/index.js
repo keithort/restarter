@@ -4,9 +4,6 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './components/App'
 
-import './favicon.ico'
-import './robots.txt'
-
 const rootEl = document.getElementById('root')
 
 ReactDOM.render(
