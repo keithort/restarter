@@ -12,7 +12,6 @@ class App extends React.Component {
     fetch('/api/stories')
     .then(res => res.json())
     .then(res => {
-      console.log(res)
       this.setState({ stories: res })
     })
     .catch(e => console.log(e))

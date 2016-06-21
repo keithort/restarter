@@ -8,12 +8,15 @@ export default class CommentForm extends React.Component {
       text: ''
     }
   }
+
   handleAuthorChange = (e) => {
     this.setState({author: e.target.value})
   }
+
   handleTextChange = (e) => {
     this.setState({text: e.target.value})
   }
+
   render () {
     return (
       <form className='commentForm'>
