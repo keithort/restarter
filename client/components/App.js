@@ -1,14 +1,27 @@
 import React from 'react'
-import CommentForm from './CommentForm'
-import Button from './Button'
 
 class App extends React.Component {
+  constructor () {
+    super()
+    this.state = {
+      stories: []
+    }
+  }
+
+  componentDidMount () {
+    fetch('/api/stories')
+    .then(res => res.json())
+    .then(res => {
+      console.log(res)
+      this.setState({ stories: res })
+    })
+    .catch(e => console.log(e))
+  }
+
   render () {
     return (
       <div>
-        Hello World!
-        <Button />
-        <CommentForm />
+        {this.state.stories.length > 0 && this.state.stories.map((story, i) => <div>{story.title}</div>)}
       </div>
     )
   }
