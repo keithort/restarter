@@ -1,14 +1,12 @@
 import React from 'react'
-import CommentForm from './CommentForm'
-import Button from './Button'
+import Nav from '../components/Nav'
 
 class App extends React.Component {
   render () {
     return (
       <div>
-        Hello World!
-        <Button />
-        <CommentForm />
+        <Nav />
+        {this.props.children}
       </div>
     )
   }

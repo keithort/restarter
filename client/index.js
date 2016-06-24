@@ -1,28 +1,48 @@
 import 'babel-polyfill'
-import { AppContainer } from 'react-hot-loader'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import App from './components/App'
+import 'sanitize.css/sanitize.css'
+import './global.css'
+import configureStore from './store/configureStore'
 
+const store = configureStore()
 const rootEl = document.getElementById('root')
 
-ReactDOM.render(
-  <AppContainer>
-    <App />
-  </AppContainer>,
-  rootEl
-)
+/**
+ * Since we are using Redux, we don't have much component state. Thus, we do not
+ * need react-hot-loader and can instead use @dan_abramov-approved approach:
+ * "vanilla" Webpack Hot Module Replacement + conditional render function.
+ */
+let render = () => {
+  const Root = require('./containers/Root').default
+  ReactDOM.render(
+    <Root store={store} />,
+    rootEl
+  )
+}
 
 if (module.hot) {
-  module.hot.accept('./components/App', () => {
-    // If you use Webpack 2 in ES modules mode, you can
-    // use <App /> here rather than require() a <NextApp />.
-    const NextApp = require('./components/App').default
+  const renderApp = render
+  const renderError = (error) => {
+    const RedBox = require('redbox-react')
     ReactDOM.render(
-      <AppContainer>
-        <NextApp />
-      </AppContainer>,
+      <RedBox error={error} />,
       rootEl
     )
+  }
+
+  render = () => {
+    try {
+      renderApp()
+    } catch (error) {
+      renderError(error)
+    }
+  }
+
+  module.hot.accept('./containers/Root', () => {
+    // this is magic, i have no idea why we need setTimeout here
+    setTimeout(render)
   })
 }
+
+render()
