@@ -5,7 +5,7 @@
     },
     "test": {
       "presets": ["es2015", "react", "stage-0"],
-      "plugins": [ [ "__coverage__", { "only": "modules/" } ] ]
+      "plugins": [ [ "__coverage__", { "only": ["/client", "/server"] } ] ]
     },
     "production": {
       "presets": ["es2015", "react", "stage-0", "react-optimize"],

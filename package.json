@@ -51,6 +51,7 @@
   },
   "devDependencies": {
     "babel-eslint": "^6.0.4",
+    "babel-plugin-__coverage__": "^11.0.0",
     "babel-register": "^6.9.0",
     "expect": "^1.20.1",
     "mocha": "^2.5.3",
@@ -66,6 +67,14 @@
       "babel-register"
     ],
     "sourceMap": false,
-    "instrument": false
+    "instrument": false,
+    "exclude": [
+      "**/migrations/**",
+      "**/tools/**",
+      "**/test/**"
+    ]
+  },
+  "engines": {
+    "node": "6.2.2"
   }
 }
