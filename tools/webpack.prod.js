@@ -1,39 +1,28 @@
-const path = require('path')
 const webpack = require('webpack')
 const CONFIG = require('./webpack.base')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const autoprefixer = require('autoprefixer')
 const AssetsPlugin = require('assets-webpack-plugin')
 const { CLIENT_ENTRY, CLIENT_OUTPUT, PUBLIC_PATH } = CONFIG
 
 module.exports = {
   devtool: false,
-  entry: [
-    CLIENT_ENTRY
-  ],
+  entry: {
+    main: [CLIENT_ENTRY],
+    vendor: [
+      'react',
+      'react-dom',
+      'react-router',
+      'react-redux',
+      'redux'
+    ]
+  },
   output: {
-    filename: '[name]-[hash].js',
-    chunkFilename: '[name]-[hash].chunk.js',
+    filename: '[name]-[hash:8].js',
+    chunkFilename: '[name]-[hash:8].chunk.js',
     publicPath: PUBLIC_PATH,
     path: CLIENT_OUTPUT
   },
-  plugins: [
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.optimize.AggressiveMergingPlugin(),
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        unused: true,
-        dead_code: true,
-        warnings: false,
-        screw_ie8: true
-      }
-    }),
-    new webpack.NoErrorsPlugin(),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('production'),
-      '__DEV__': false
-    }),
-    new AssetsPlugin({ filename: 'assets.json' }),
-  ],
   module: {
     loaders: [
       {
@@ -44,6 +33,10 @@ module.exports = {
       {
         test: /\.json$/,
         loader: 'json'
+      },
+      {
+        test: /\.css$/,
+        loader: ExtractTextPlugin.extract('style', 'css?localIdentName=sp[name][local]__[hash:8]&modules&minimize&importLoaders=1!postcss')
       },
       {
         test: /\.(gif|jpe?g|png|ico)$/,
@@ -58,5 +51,30 @@ module.exports = {
         include: CLIENT_ENTRY
       }
     ]
-  }
+  },
+  plugins: [
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.optimize.AggressiveMergingPlugin(),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      filename: 'vendor-[hash:8].js'
+    }),
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        unused: true,
+        dead_code: true,
+        warnings: false,
+        screw_ie8: true
+      }
+    }),
+    new webpack.NoErrorsPlugin(),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('production'),
+      '__DEV__': false
+    }),
+    new ExtractTextPlugin('styles-[hash:8].css'),
+    new AssetsPlugin({ filename: 'assets.json' })
+  ],
+  postcss: () => [ autoprefixer ]
 }

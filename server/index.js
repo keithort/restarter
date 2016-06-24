@@ -17,7 +17,7 @@ server.use(bodyParser.json())
 server.use(bodyParser.urlencoded({ extended: true }))
 
 server.use(session({
-  secret: 'keyboard cat',
+  secret: process.env.COOKIE_SECRET || 'keyboard cat',
   resave: false,
   saveUninitialized: true,
   key: 'sessionId', // Use generic cookie name for security purposes
@@ -27,7 +27,7 @@ server.use(session({
   }
 }))
 
-server.use(cookieParser('keyboard cat'))
+server.use(cookieParser(process.env.COOKIE_SECRET || 'keyboard cat'))
 
 if (__PROD__) {
   config = require('../tools/webpack.prod')
@@ -66,11 +66,13 @@ server.get('*', (req, res) => {
         <title>Yolo</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" type="image/x-icon" href="favicon.ico">
+        <link rel="stylesheet" href="${__PROD__ ? assets.main.css : 'assets/styles.css'}" />
       </head>
       <body>
         <div id="root"></div>
         <script>window.Promise || document.write('\\x3Cscript src=\"/es6-promise.min.js\">\\x3C/script>\\x3Cscript>ES6Promise.polyfill()\\x3C/script>')</script>
         <script>window.fetch || document.write('\\x3Cscript src=\"/fetch.min.js\">\\x3C/script>')</script>
+        <script src="${__PROD__ ? assets.vendor.js : 'assets/vendor.js'}"></script>
         <script src="${__PROD__ ? assets.main.js : 'assets/main.js'}"></script>
       </body>
     </html>

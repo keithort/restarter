@@ -1,29 +1,32 @@
 const path = require('path')
 const webpack = require('webpack')
+const autoprefixer = require('autoprefixer')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const CONFIG = require('./webpack.base')
 
 const { CLIENT_ENTRY, CLIENT_OUTPUT, PUBLIC_PATH } = CONFIG
 
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
-  entry: [
-    'webpack-hot-middleware/client',
-    CLIENT_ENTRY
-  ],
+  entry: {
+    main: [
+      'webpack-hot-middleware/client',
+      CLIENT_ENTRY
+    ],
+    vendor: [
+      'react',
+      'react-dom',
+      'react-router',
+      'react-redux',
+      'redux'
+    ]
+  },
   output: {
     filename: '[name].js',
     chunkFilename: '[name].chunk.js',
     publicPath: PUBLIC_PATH,
     path: CLIENT_OUTPUT
   },
-  plugins: [
-    new webpack.HotModuleReplacementPlugin(), // Tell webpack we want hot reloading
-    new webpack.NoErrorsPlugin(),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('development'),
-      '__DEV__': true
-    })
-  ],
   module: {
     preLoaders: [
       {
@@ -41,18 +44,13 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loader: 'style-loader!css-loader?localIdentName=sp[name][local]__[hash:base64:5]&modules&importLoaders=1&sourceMap!postcss-loader',
-        exclude: /node_modules/
+        loader: ExtractTextPlugin.extract('style', 'css?localIdentName=sp[name][local]__[hash:base64:5]&modules&importLoaders=1&sourceMap!postcss'),
+        exclude: /(node_modules)/
       },
       {
-        // Do not transform vendor's CSS with CSS-modules
-        // The point is that they remain in global scope.
-        // Since we require these CSS files in our JS or CSS files,
-        // they will be a part of our compilation either way.
-        // So, no need for ExtractTextPlugin here.
         test: /\.css$/,
-        include: /node_modules/,
-        loaders: ['style-loader', 'css-loader']
+        loader: ExtractTextPlugin.extract('style', 'css!postcss'),
+        include: /(node_modules)/
       },
       {
         test: /\.json$/,
@@ -72,6 +70,20 @@ module.exports = {
       }
     ]
   },
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(), // Tell webpack we want hot reloading
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      filename: 'vendor.js'
+    }),
+    new ExtractTextPlugin('styles.css'),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('development'),
+      '__DEV__': true
+    })
+  ],
+  postcss: () => [ autoprefixer ],
   standard: {
     // config options to be passed through to standard e.g.
     parser: 'babel-eslint'
