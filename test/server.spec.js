@@ -1,7 +1,7 @@
 /* eslint-env mocha */
-import expect from 'expect'
+const expect = require('expect')
 
-import '../server'
+require('../server')
 
 describe('App', (done) => {
   it('exists', (done) => {
