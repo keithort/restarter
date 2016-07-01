@@ -43,12 +43,15 @@ if (__PROD__) {
   const webpackHotMiddleware = require('webpack-hot-middleware')
   const compiler = webpack(config)
   const middleware = webpackDevMiddleware(compiler, {
-    noInfo: true,
     publicPath: config.output.publicPath,
     silent: true,
     stats: {
       colors: true,
-      progress: true
+      hash: false,
+      timings: true,
+      chunks: false,
+      chunkModules: false,
+      modules: false
     }
   })
   server.use(morgan('dev'))
