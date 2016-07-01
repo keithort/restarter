@@ -1,6 +1,5 @@
 'use strict'
 
-const path = require('path')
 const express = require('express')
 const bodyParser = require('body-parser')
 const helmet = require('helmet')
@@ -59,7 +58,7 @@ if (__PROD__) {
   server.use(webpackHotMiddleware(compiler))
 }
 
-server.use(express.static(path.join(__dirname, '../public')))
+server.use(express.static('public'))
 
 server.get('*', (req, res) => {
   res.send(`
