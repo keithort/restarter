@@ -1,11 +1,13 @@
-import express from 'express'
-import bodyParser from 'body-parser'
-import helmet from 'helmet'
-import compression from 'compression'
-import morgan from 'morgan'
-import path from 'path'
-import session from 'express-session'
-import cookieParser from 'cookie-parser'
+'use strict'
+
+const path = require('path')
+const express = require('express')
+const bodyParser = require('body-parser')
+const helmet = require('helmet')
+const compression = require('compression')
+const morgan = require('morgan')
+const session = require('express-session')
+const cookieParser = require('cookie-parser')
 
 const __PROD__ = process.env.NODE_ENV === 'production'
 let config, assets

@@ -3,10 +3,9 @@
   "version": "1.0.0",
   "description": "My react seed project",
   "scripts": {
-    "start": "babel-node ./server",
+    "start": "node ./server",
     "build": "npm run build-client && npm run build-server",
     "build-client": "webpack --config ./tools/webpack.prod",
-    "build-server": "rimraf lib && babel ./server -d lib --copy-files",
     "test": "rimraf lib && NODE_ENV=test ./node_modules/mocha/bin/mocha --compilers js:babel-core/register --recursive",
     "test:watch": "npm test -- --watch",
     "coverage": "nyc npm test",
