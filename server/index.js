@@ -33,15 +33,15 @@ const createServer = (config) => {
 
   if (__PROD__) {
     // Production-only Middileware
-    assets = require('../assets.json')
+    assets = require('../assets.json') // eslint-disable-line global-require
     app.use(helmet())
     app.use(compression())
   } else {
     // Development-only Middleware
-    const webpackConfig = require('../tools/webpack.dev')
-    const webpack = require('webpack')
-    const webpackDevMiddleware = require('webpack-dev-middleware')
-    const webpackHotMiddleware = require('webpack-hot-middleware')
+    const webpackConfig = require('../tools/webpack.dev') // eslint-disable-line global-require
+    const webpack = require('webpack') // eslint-disable-line global-require
+    const webpackDevMiddleware = require('webpack-dev-middleware') // eslint-disable-line global-require
+    const webpackHotMiddleware = require('webpack-hot-middleware') // eslint-disable-line global-require
     const compiler = webpack(webpackConfig)
     app.use(webpackDevMiddleware(compiler, {
       publicPath: webpackConfig.output.publicPath,

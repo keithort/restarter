@@ -21,7 +21,7 @@ export default function configureStore () {
   // Enable HMR during development
   if (module.hot) {
     module.hot.accept('../reducers', () =>
-      store.replaceReducer(require('../reducers').default)
+      store.replaceReducer(require('../reducers').default) // eslint-disable-line global-require
     )
   }
 

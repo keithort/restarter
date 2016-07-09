@@ -14,7 +14,7 @@ const rootEl = document.getElementById('root')
  * "vanilla" Webpack Hot Module Replacement + conditional render function.
  */
 let render = () => {
-  const Root = require('./containers/Root').default
+  const Root = require('./containers/Root').default // eslint-disable-line global-require
   ReactDOM.render(
     <Root store={store} />,
     rootEl
@@ -24,7 +24,7 @@ let render = () => {
 if (module.hot) {
   const renderApp = render
   const renderError = (error) => {
-    const RedBox = require('redbox-react')
+    const RedBox = require('redbox-react') // eslint-disable-line global-require
     ReactDOM.render(
       <RedBox error={error} />,
       rootEl
