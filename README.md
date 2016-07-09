@@ -1,6 +1,6 @@
 # Restarter
 
-[![Build Status](https://travis-ci.org/jaredpalmer/restarter.svg?branch=master)](https://travis-ci.org/jaredpalmer/restarter) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
+[![CircleCI](https://circleci.com/gh/jaredpalmer/restarter.svg?style=svg)](https://circleci.com/gh/jaredpalmer/restarter) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 
 React-Redux seed project for things that don't need server-side rendering.
 

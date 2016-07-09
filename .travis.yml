@@ -1,9 +1,0 @@
-sudo: false
-dist: trusty
-language: node_js
-node_js:
-- '6.2.2'
-script:
-  - npm run coverage
-after_script:
-  - nyc report --reporter=lcov && codeclimate-test-reporter < ./coverage/lcov.info
