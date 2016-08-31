@@ -57,7 +57,7 @@
     "mocha": "^3.0.2",
     "nyc": "^7.0.0",
     "redbox-react": "^1.2.9",
-    "standard": "^7.1.2",
+    "standard": "^8.0.0",
     "standard-loader": "^4.0.0",
     "webpack-dev-middleware": "^1.6.1",
     "webpack-hot-middleware": "^2.12.1"
